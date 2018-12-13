@@ -1,21 +1,3 @@
-# rules_test = [
-# "...##",
-# "..#..",
-# ".#...",
-# ".#.#.",
-# ".#.##",
-# ".##..",
-# ".####",
-# "#.#.#",
-# "#.###",
-# "##.#.",
-# "##.##",
-# "###..",
-# "###.#",
-# "####."
-# ]
-
-
 rules = [
 "##.##", #
 "..##.", #
@@ -50,13 +32,9 @@ next_state = list(buffer*"."+"#......##...#.#.###.#.##..##.#.....##....#.#.##.##
 for generation in range(generations+1):
 	state = next_state[:]
 	print("".join(state))
-	# next_state = state[:]
 	first_pot = [i for i,pot in enumerate(state) if pot == '#'][0]
 	for pot in range(len(state)):
-		match ="".join(state[pot-2:pot+3])
-		next_state[pot] = '#' if match in rules else '.'
-
-
+		next_state[pot] = '#' if "".join(state[pot-2:pot+3]) in rules else '.'
 	print(generation, sum([i-buffer for i,pot in enumerate(state) if pot == "#"]))
 
 # found linear progression after a while. 
