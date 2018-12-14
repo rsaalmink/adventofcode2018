@@ -154,7 +154,7 @@ r"                                                                              
 ]
 
 
-data1 = [
+data_test = [
 r"               ",
 r" /->-\         ",
 r" |   |  /----\ ",
@@ -181,6 +181,39 @@ handle_intersection = {
 	('^', 'r') : ('>','l'),
 	('<', 'r') : ('^','l')
 }
+
+
+tracks = []
+carts = {}
+
+def initialize():
+	for line in data:
+		tracks.append(list(line))
+	
+	cart_id = 0
+	for i,row in enumerate(tracks):
+		for j,v in enumerate(row):
+			if v in '><':
+				tracks[i][j] = '-'
+				carts[cart_id] = [v, (i,j), 'l']
+				cart_id += 1
+			if v in 'v^':
+				tracks[i][j] = '|'
+				carts[cart_id] = [v, (i,j), 'l']
+				cart_id += 1
+
+
+def print_tracks_state(carts, tracks):
+	for i,row in enumerate(tracks):
+		result = ""
+		for j,v in enumerate(row):
+			is_cart = ""
+			for cart in carts:
+				if carts[cart][1] == (i,j):
+					is_cart = carts[cart][0]
+			result += is_cart if is_cart else tracks[i][j]
+		print(result)
+
 
 def move_cart(cart_id):
 	direction, (x,y), intersection_state = carts[cart_id]
@@ -226,37 +259,6 @@ def move_cart(cart_id):
 			carts[cart_id] = [direction, (x,y-1), intersection_state]
 	return carts[cart_id][1]
 
-
-tracks = []
-carts = {}
-
-def initialize():
-	for line in data:
-		tracks.append(list(line))
-	
-	cart_id = 0
-	for i,row in enumerate(tracks):
-		for j,v in enumerate(row):
-			if v in '><':
-				tracks[i][j] = '-'
-				carts[cart_id] = [v, (i,j), 'l']
-				cart_id += 1
-			if v in 'v^':
-				tracks[i][j] = '|'
-				carts[cart_id] = [v, (i,j), 'l']
-				cart_id += 1
-
-def print_tracks_state(carts, tracks):
-	for i,row in enumerate(tracks):
-		if i < 5:
-			result = ""
-			for j,v in enumerate(row):
-				is_cart = ""
-				for cart in carts:
-					if carts[cart][1] == (i,j):
-						is_cart = carts[cart][0]
-				result += is_cart if is_cart else tracks[i][j]
-			print(result)
 
 
 def find_collission():
