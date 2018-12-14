@@ -1,6 +1,6 @@
 import sys
 
-# Reused my Linked List implementation of Day 9, hoping it might get useful for part 2. Guessed wrong :)
+# Reused my Linked List implementation of Day 9, hoped it might get useful for part 2. Guessed wrong -.-
 
 class Node:
     def __init__(self, value, prev=None, next=None):
@@ -21,14 +21,12 @@ class Node:
 def list_as_string(start_node, amount=sys.maxsize):
     it = start_node
     result = str(it.value)
-    i = 0
-    while it.next != start_node and i < amount-1:
+    i = 1
+    while it.next != start_node and i < amount:
         it = it.next
         i += 1
         result += str(it.value)
     return result
-
-
 
 
 start_node = Node(3)
